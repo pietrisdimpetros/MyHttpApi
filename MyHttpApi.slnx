@@ -1,0 +1,14 @@
+<Solution>
+  <Project Path="MyHttpApi/MyHttpApi.csproj" />
+  <Project Path="Shared.Audit/Shared.Audit.csproj" />
+  <Project Path="Shared.Caching/Shared.Caching.csproj" />
+  <Project Path="Shared.Data/Shared.Data.csproj" />
+  <Project Path="Shared.Documentation/Shared.Documentation.csproj" />
+  <Project Path="Shared.ExternalIntegration/Shared.ExternalApiIntegration.csproj" />
+  <Project Path="Shared.Hosting/Shared.Hosting.csproj" />
+  <Project Path="Shared.Logging/Shared.Logging.csproj" />
+  <Project Path="Shared.Observability/Shared.Observability.csproj" />
+  <Project Path="Shared.Security/Shared.Security.csproj" />
+  <Project Path="Shared.Serialization/Shared.Serialization.csproj" />
+  <Project Path="Shared.Validation/Shared.Validation.csproj" />
+</Solution>
