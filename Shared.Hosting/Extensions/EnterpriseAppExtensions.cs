@@ -26,18 +26,18 @@ namespace Shared.Hosting.Extensions
             // (Observability usually hooks largely into DI, but if you have metrics middleware:)
             // app.UseObservabilityEndpoints(); 
 
-            // 4. Security
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            // 5. Documentation (Swagger)
+            // 4. Documentation (Swagger)
             // Only in non-prod or if explicitly enabled
             if (app.Environment.IsDevelopment() || app.Configuration.GetValue<bool>("Documentation:EnableInProd"))
             {
                 app.UseEnterpriseDocumentation();
             }
 
-            // 5. Health Checks Endpoint
+            // 5. Security
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            // 6. Health Checks Endpoint
             app.MapHealthChecks("/health");
             app.MapHealthChecks("/alive");
 

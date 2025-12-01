@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Shared.Documentation.Configuration;
 using System.Reflection;
 namespace Shared.Documentation.Extensions
@@ -54,20 +54,11 @@ namespace Shared.Documentation.Extensions
 
                 // 3. REQUIRE OAUTH2 GLOBALLY
                 // This puts the "Lock" icon on every endpoint
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
+
+                c.AddSecurityRequirement((document) => new OpenApiSecurityRequirement()
                 {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "OAuth2"
-                        }
-                    },
-                    options.Scopes // Require these scopes for access
-                }
-            });
+                    [new OpenApiSecuritySchemeReference("oauth2", document)] = ["readAccess", "writeAccess"]
+                });
 
                 // 4. XML Comments
                 if (options.EnableXmlComments && apiAssembly != null)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Shared.Caching.Extensions;
 using Shared.Documentation.Extensions;
 using Shared.Hosting.Configuration;
@@ -11,6 +12,7 @@ using Shared.Logging.Extensions;
 using Shared.Observability.Extensions;
 using Shared.Security.Extensions;
 using Shared.Serialization.Extensions;
+using Shared.Serialization.Services;
 using Shared.Validation.Extensions;
 using System.Reflection;
 
@@ -41,6 +43,7 @@ namespace Shared.Hosting.Extensions
             builder.Configuration["Logging:Enterprise:ApplicationName"] = appOptions.Name;
 
             // Map App.Identity -> Shared.Security (For validating incoming tokens)
+            builder.Configuration["AzureAd:Domain"] = appOptions.Domain; 
             builder.Configuration["AzureAd:TenantId"] = appOptions.TenantId;
             builder.Configuration["AzureAd:ClientId"] = appOptions.ClientId;
             // (Instance/Domain are usually static or standard)
@@ -89,6 +92,7 @@ namespace Shared.Hosting.Extensions
             // REGISTER PILLARS
             // =========================================================
             builder.Services.AddEnterpriseSerialization();
+            builder.Services.AddSingleton(Options.Create(SystemTextJsonSerializer.DefaultOptions));
             builder.Services.AddEnterpriseLogging(builder.Configuration);
             builder.Services.AddAzureObservability(builder.Configuration);
             builder.Services.AddEntraIdWithRoleAugmentation<TUser>(builder.Configuration);
